@@ -42,7 +42,6 @@ Causality360/
 │   │   └── app.module.*
 │   ├── assets/
 │   └── index.html
-├── ApiCausality360/        # Backend .NET
 ├── angular.json
 ├── package.json
 └── README.md
@@ -148,4 +147,3 @@ La aplicación consume una API .NET que proporciona:
 
 ---
 
-**Desarrollado con ❤️ y Angular**
