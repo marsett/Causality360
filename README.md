@@ -1,5 +1,8 @@
 # Causality360 - Análisis Inteligente de Noticias
 
+## 📄 Licencia
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+
 ## 🚀 Descripción
 Aplicación web desarrollada con Angular que proporciona análisis automatizado de noticias españolas mediante inteligencia artificial. Procesa diariamente 5 noticias seleccionadas, generando análisis de origen, impacto y predicciones fundamentadas.
 
@@ -144,8 +147,5 @@ La aplicación consume una API .NET que proporciona:
   - Sistema de categorización visual por colores
   - Estados de carga y error manejados
   - Análisis inteligente de noticias con IA
-
-## 📄 Licencia
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
 
 ---
