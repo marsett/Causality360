@@ -421,7 +421,7 @@
       }
       
       .date-title-section {
-        margin: 1.5rem 0;
+        margin: 2rem 0; /* Mismo espaciado que desktop */
       }
       
       .date-title-text {
@@ -438,9 +438,7 @@
     }
 
     @media (max-width: 480px) {
-      .date-title-section {
-        margin: 1rem 0;
-      }
+      
       
       .date-title-text {
         font-size: 1.2rem;
@@ -462,7 +460,7 @@
       position: relative;
       border: 1px solid rgba(220, 38, 38, 0.1);
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 1fr 2fr; /* Imagen a la izquierda, contenido a la derecha */
       min-height: 300px;
       gap: 0;
     }
@@ -470,7 +468,12 @@
     @media (max-width: 768px) {
       .featured-story {
         grid-template-columns: 1fr;
+        grid-template-rows: auto auto; /* Imagen arriba, contenido abajo */
         min-height: auto;
+      }
+      
+      .featured-media {
+        height: 200px;
       }
     }
 
@@ -663,12 +666,6 @@
     .featured-media {
       position: relative;
       overflow: hidden;
-    }
-
-    @media (max-width: 768px) {
-      .featured-media {
-        height: 200px;
-      }
     }
 
     .featured-media img {
@@ -1163,6 +1160,14 @@
       margin-bottom: 1rem;
     }
 
+    /* Controles móviles para eventos similares - ocultos por defecto */
+    .mobile-similar-controls {
+      display: none;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
     .carousel-btn {
       background: linear-gradient(45deg, #dc2626, #991b1b);
       color: white;
@@ -1413,6 +1418,14 @@
   margin-bottom: 2rem;
 }
 
+/* Controles móviles - ocultos por defecto */
+.mobile-carousel-controls {
+  display: none;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
 .carousel-controls {
   display: contents; /* En desktop, los controles actúan como si no existieran */
 }
@@ -1485,7 +1498,7 @@
 
 @media (max-width: 480px) {
   .workflow-step {
-    width: calc(25% - 0.5rem);
+    width: calc(25% - 0.2rem); /* Cards más anchas para pantallas pequeñas */
   }
 }
 
@@ -1710,10 +1723,17 @@
   .workflow-carousel {
     gap: 1.25rem;
     padding: 0 0.5rem;
+    flex-direction: column; /* Cambiar a columna */
   }
   
-  .carousel-controls {
-    gap: 1.25rem;
+  /* Ocultar controles del carrusel principal en móvil */
+  .workflow-carousel .carousel-nav {
+    display: none;
+  }
+  
+  /* Mostrar controles móviles debajo */
+  .mobile-carousel-controls {
+    display: flex;
   }
   
   .carousel-nav {
@@ -1722,10 +1742,16 @@
     font-size: 1rem;
   }
   
+  .workflow-viewport {
+    width: 100%;
+    order: 1;
+  }
+  
   .workflow-step {
     padding: 1.5rem;
     min-height: 260px;
-    margin: 0 0.25rem;
+    margin: 0 0.1rem; /* Reducir márgenes para cards más anchas */
+    width: calc(25% - 0.2rem); /* Cards más anchas */
   }
   
   .step-icon {
@@ -1997,5 +2023,27 @@
   .workflow-step {
     min-width: auto;
     max-width: none;
+  }
+
+  /* Carrusel de eventos similares en móvil */
+  .similar-carousel {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* Ocultar controles del carrusel principal en móvil */
+  .similar-carousel .carousel-btn {
+    display: none;
+  }
+
+  /* Mostrar controles móviles debajo */
+  .mobile-similar-controls {
+    display: flex;
+    margin-bottom: 1.5rem; /* Más espacio entre botones y puntitos */
+  }
+
+  .carousel-content {
+    width: 100%;
+    order: 1;
   }
 }

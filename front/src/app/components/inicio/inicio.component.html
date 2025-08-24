@@ -65,6 +65,10 @@
     <!-- Featured Story -->
     <section class="featured-section">
       <article class="featured-story" (click)="selectEvent(events[0])">
+        <div class="featured-media" *ngIf="events[0].imageUrl">
+          <img [src]="events[0].imageUrl" [alt]="events[0].titulo" (error)="onImageError($event)">
+        </div>
+
         <div class="featured-content">
           <div class="featured-meta">
             <div class="category-badges">
@@ -101,10 +105,6 @@
             </div>
             <button class="read-more-btn">Ver análisis completo →</button>
           </div>
-        </div>
-
-        <div class="featured-media" *ngIf="events[0].imageUrl">
-          <img [src]="events[0].imageUrl" [alt]="events[0].titulo" (error)="onImageError($event)">
         </div>
       </article>
     </section>
@@ -201,6 +201,10 @@
         
         <!-- Carrusel del Workflow -->
         <div class="workflow-carousel">
+          <button class="carousel-nav carousel-prev" (click)="previousWorkflowStep()" [disabled]="currentWorkflowStep === 0">
+            ‹
+          </button>
+          
           <div class="workflow-viewport">
             <div class="workflow-track" [style.transform]="'translateX(-' + (currentWorkflowStep * 25) + '%)'">
               
@@ -259,14 +263,19 @@
             </div>
           </div>
           
-          <div class="carousel-controls">
-            <button class="carousel-nav carousel-prev" (click)="previousWorkflowStep()" [disabled]="currentWorkflowStep === 0">
-              ‹
-            </button>
-            <button class="carousel-nav carousel-next" (click)="nextWorkflowStep()" [disabled]="currentWorkflowStep === 3">
-              ›
-            </button>
-          </div>
+          <button class="carousel-nav carousel-next" (click)="nextWorkflowStep()" [disabled]="currentWorkflowStep === 3">
+            ›
+          </button>
+        </div>
+        
+        <!-- Controles móviles debajo (solo visible en ≤480px) -->
+        <div class="mobile-carousel-controls">
+          <button class="carousel-nav carousel-prev" (click)="previousWorkflowStep()" [disabled]="currentWorkflowStep === 0">
+            ‹
+          </button>
+          <button class="carousel-nav carousel-next" (click)="nextWorkflowStep()" [disabled]="currentWorkflowStep === 3">
+            ›
+          </button>
         </div>
         
         <!-- Indicadores -->
@@ -431,6 +440,17 @@
             </div>
           </div>
 
+          <button class="carousel-btn carousel-next"
+            [disabled]="currentSimilarIndex === selectedEvent.similarEvents.length - 1" (click)="nextSimilar()">
+            ›
+          </button>
+        </div>
+
+        <!-- Controles móviles para eventos similares (solo visible en ≤480px) -->
+        <div class="mobile-similar-controls">
+          <button class="carousel-btn carousel-prev" [disabled]="currentSimilarIndex === 0" (click)="previousSimilar()">
+            ‹
+          </button>
           <button class="carousel-btn carousel-next"
             [disabled]="currentSimilarIndex === selectedEvent.similarEvents.length - 1" (click)="nextSimilar()">
             ›
