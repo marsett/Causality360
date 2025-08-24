@@ -1,0 +1,456 @@
+<div class="news-container">
+  <!-- NUEVA CABECERA SIMPLIFICADA -->
+  <header class="masthead">
+    <div class="masthead-content">
+      <div class="brand-section">
+        <h1 class="publication-name">
+          Causality<span class="accent-text">360</span>
+        </h1>
+        <div class="tagline">Noticias Diarias • Análisis con IA en Tiempo Real</div>
+      </div>
+
+      <div class="actions-section">
+        <button class="refresh-button" (click)="loadTodayEvents()" [disabled]="loading">
+          <span class="refresh-icon" [class.spinning]="loading">⟳</span>
+          <span class="button-text">Actualizar</span>
+        </button>
+        <!-- <div class="stats-display" *ngIf="hasEvents">
+          <span class="stat-number">{{ events.length }}</span>
+          <span class="stat-label">noticias</span>
+        </div> -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-section">
+    <div class="loading-indicator">
+      <div class="pulse-animation"></div>
+      <h3>Procesando noticias del día</h3>
+      <p>Analizando fuentes con inteligencia artificial...</p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-section">
+    <div class="error-content">
+      <div class="error-icon">⚠</div>
+      <h3>Servicio temporalmente no disponible</h3>
+      <p>{{ error }}</p>
+      <button class="retry-button" (click)="loadTodayEvents()">
+        Reintentar carga
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && !hasEvents" class="empty-section">
+    <div class="empty-content">
+      <div class="empty-icon">📰</div>
+      <h3>No hay noticias disponibles</h3>
+      <p>Revisa más tarde para ver las últimas actualizaciones</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main *ngIf="hasEvents && !loading" class="main-content">
+    <!-- Título de Fecha -->
+    <div class="date-title-section">
+      <h2 class="date-title-text">
+        <span class="date-full">{{ getCurrentDate() }}</span>
+        <span class="date-short">{{ getCurrentDateShort() }}</span>
+      </h2>
+    </div>
+
+    <!-- Featured Story -->
+    <section class="featured-section">
+      <article class="featured-story" (click)="selectEvent(events[0])">
+        <div class="featured-content">
+          <div class="featured-meta">
+            <div class="category-badges">
+              <span *ngFor="let category of events[0].categories.slice(0,2)" class="category-badge"
+                [attr.data-category]="category.toLowerCase()">
+                {{ category }}
+              </span>
+            </div>
+            <div class="source-attribution">
+              <span class="source">{{ events[0].sourceName || 'Fuente desconocida' }}</span>
+              <span class="timestamp">{{ getTimeAgo(events[0].createdAt) }}</span>
+            </div>
+          </div>
+
+          <h2 class="featured-headline">{{ events[0].titulo }}</h2>
+          <div class="featured-excerpt">
+            {{ getPreview(events[0].descripcion, 120) }}
+          </div>
+
+          <div class="featured-insights" *ngIf="events[0].origen || events[0].impacto">
+            <div class="insight-preview" *ngIf="events[0].origen">
+              <strong>Contexto:</strong> {{ getPreview(events[0].origen, 80) }}
+            </div>
+            <div class="insight-preview" *ngIf="events[0].impacto">
+              <strong>Impacto:</strong> {{ getPreview(events[0].impacto, 80) }}
+            </div>
+          </div>
+
+          <div class="featured-footer">
+            <div class="engagement-info">
+              <span *ngIf="events[0].similarEvents.length > 0" class="similar-indicator">
+                {{ events[0].similarEvents.length }} eventos relacionados
+              </span>
+            </div>
+            <button class="read-more-btn">Ver análisis completo →</button>
+          </div>
+        </div>
+
+        <div class="featured-media" *ngIf="events[0].imageUrl">
+          <img [src]="events[0].imageUrl" [alt]="events[0].titulo" (error)="onImageError($event)">
+        </div>
+      </article>
+    </section>
+
+    <!-- Otras noticias en formato compacto -->
+    <section class="other-news-section" *ngIf="events.length > 1">
+      <div class="section-header">
+        <h3 class="section-title">OTRAS NOTICIAS DESTACADAS</h3>
+      </div>
+
+      <div class="news-grid">
+        <div *ngFor="let event of events.slice(1); trackBy: trackByEventId" class="news-card"
+          (click)="selectEvent(event)">
+
+          <div class="card-media" *ngIf="event.imageUrl">
+            <img [src]="event.imageUrl" [alt]="event.titulo" (error)="onImageError($event)">
+          </div>
+
+          <div class="card-content">
+            <div class="card-header">
+              <div class="categories-list">
+                <span *ngFor="let category of event.categories.slice(0,2)" class="category-tag"
+                  [attr.data-category]="category.toLowerCase()">
+                  {{ category }}
+                </span>
+              </div>
+              <div class="source-info">
+                <span class="source-name">{{ event.sourceName || 'Fuente' }}</span>
+                <span class="publish-time">{{ getTimeAgo(event.createdAt) }}</span>
+              </div>
+            </div>
+
+            <h4 class="news-title">{{ event.titulo }}</h4>
+            <p class="news-description">{{ getPreview(event.descripcion, 100) }}</p>
+
+            <div class="card-footer">
+              <div class="related-events" *ngIf="event.similarEvents.length > 0">
+                <span class="related-count">{{ event.similarEvents.length }} similares</span>
+              </div>
+              <button class="expand-btn" *ngIf="event.fuentes"
+                (click)="openSource(event.fuentes); $event.stopPropagation()">
+                Ver fuente ↗
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Sección Informativa de la Aplicación -->
+  <section class="about-section" *ngIf="!loading && !error">
+    <div class="about-container">
+      <div class="about-header">
+        <h2 class="about-title">¿QUÉ ES CAUSALITY360?</h2>
+        <p class="about-subtitle">
+          Una plataforma inteligente de <strong>análisis automatizado de noticias</strong> que utiliza inteligencia
+          artificial para procesar, categorizar y analizar noticias diarias de fuentes españolas verificadas,
+          proporcionando contexto histórico, evaluación de impacto y predicciones fundamentadas.
+        </p>
+      </div>
+
+      <div class="about-features">
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3>5 Fuentes RSS Verificadas</h3>
+            <p>Recopilación automática diaria desde <strong>La Vanguardia, OK Diario, El Español, El Mundo y 20 Minutos</strong> mediante feeds RSS.
+              Máximo <strong>10 artículos por fuente</strong> procesados inteligentemente.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>IA Groq para Análisis</h3>
+            <p>Integración con la API de Groq para generar análisis de origen, evaluación de impacto, predicciones IA y
+              detección de eventos similares históricos para cada noticia. <strong>Rate limiting de 1 segundo entre llamadas</strong> para estabilidad.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🏷️</div>
+            <h3>5 Categorías Inteligentes</h3>
+            <p>Categorización automática en Política, Economía, Tecnología, Social e Internacional mediante algoritmo de
+              análisis de contenido y coherencia textual. <strong>Categorización auténtica basada en el contenido real</strong> sin forzar distribución.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>5 Noticias Diarias</h3>
+            <p><strong>Cada día a las 12:00 AM</strong> se procesan automáticamente 5 noticias seleccionadas (una por fuente) desde las fuentes RSS.
+            <strong>Distribución natural de categorías</strong> según el contenido disponible del día.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-workflow">
+        <h3 class="workflow-title">FLUJO DE PROCESAMIENTO AUTOMATIZADO</h3>
+        
+        <!-- Carrusel del Workflow -->
+        <div class="workflow-carousel">
+          <div class="workflow-viewport">
+            <div class="workflow-track" [style.transform]="'translateX(-' + (currentWorkflowStep * 25) + '%)'">
+              
+              <!-- Paso 1 -->
+              <div class="workflow-step">
+                <div class="step-visual">
+                  <div class="step-number">1</div>
+                  <div class="step-icon">📰</div>
+                </div>
+                <div class="step-content">
+                  <div class="step-title">Recolección RSS Diaria</div>
+                  <p class="step-desc">NewsSchedulerService ejecuta <strong>diariamente a las 12:00 AM</strong> la recolección desde los 5 feeds RSS españoles.
+                  Se procesan hasta <strong>10 artículos por fuente</strong> con validación de coherencia textual y filtrado inteligente.</p>
+                </div>
+              </div>
+
+              <!-- Paso 2 -->
+              <div class="workflow-step">
+                <div class="step-visual">
+                  <div class="step-number">2</div>
+                  <div class="step-icon">✅</div>
+                </div>
+                <div class="step-content">
+                  <div class="step-title">Filtrado y Validación</div>
+                  <p class="step-desc">SmartCategorizerService valida coherencia entre título y descripción. Se descartan
+                    noticias irrelevantes y se priorizan por relevancia. <strong>Una noticia por fuente</strong> garantizada.</p>
+                </div>
+              </div>
+
+              <!-- Paso 3 -->
+              <div class="workflow-step">
+                <div class="step-visual">
+                  <div class="step-number">3</div>
+                  <div class="step-icon">🧠</div>
+                </div>
+                <div class="step-content">
+                  <div class="step-title">Análisis IA Groq</div>
+                  <p class="step-desc">IAService procesa cada noticia seleccionada generando: análisis de origen, evaluación
+                    de impacto, predicción IA y búsqueda de <strong>3 eventos similares históricos</strong> con explicación contextual detallada.</p>
+                </div>
+              </div>
+
+              <!-- Paso 4 -->
+              <div class="workflow-step">
+                <div class="step-visual">
+                  <div class="step-number">4</div>
+                  <div class="step-icon">💾</div>
+                </div>
+                <div class="step-content">
+                  <div class="step-title">Almacenamiento Azure</div>
+                  <p class="step-desc">Los eventos procesados se almacenan en Azure SQL Database con relaciones de categorías
+                    y eventos similares. <strong>Caché en memoria con invalidación automática</strong> para optimizar rendimiento.</p>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+          <div class="carousel-controls">
+            <button class="carousel-nav carousel-prev" (click)="previousWorkflowStep()" [disabled]="currentWorkflowStep === 0">
+              ‹
+            </button>
+            <button class="carousel-nav carousel-next" (click)="nextWorkflowStep()" [disabled]="currentWorkflowStep === 3">
+              ›
+            </button>
+          </div>
+        </div>
+        
+        <!-- Indicadores -->
+        <div class="workflow-indicators">
+          <span *ngFor="let step of [0,1,2,3]; let i = index" 
+                class="workflow-indicator" 
+                [class.active]="i === currentWorkflowStep"
+                (click)="goToWorkflowStep(i)">
+          </span>
+        </div>
+      </div>
+
+      <div class="about-tech">
+        <h3 class="tech-title">STACK TECNOLÓGICO</h3>
+        <div class="tech-details">
+          <div class="tech-section">
+            <div class="tech-label">Backend API (.NET)</div>
+            <div class="tech-stack">
+              <span class="tech-tag">ASP.NET Core 9</span>
+              <span class="tech-tag">Entity Framework Core</span>
+              <span class="tech-tag">Azure SQL Database</span>
+              <span class="tech-tag">AutoMapper</span>
+              <span class="tech-tag">Swagger/OpenAPI</span>
+            </div>
+          </div>
+          <div class="tech-section">
+            <div class="tech-label">IA & Procesamiento</div>
+            <div class="tech-stack">
+              <span class="tech-tag">Groq AI API</span>
+              <span class="tech-tag">RSS SyndicationFeed</span>
+              <span class="tech-tag">SmartCategorizer</span>
+              <span class="tech-tag">Memory Cache</span>
+              <span class="tech-tag">Background Services</span>
+            </div>
+          </div>
+          <div class="tech-section">
+            <div class="tech-label">Frontend SPA</div>
+            <div class="tech-stack">
+              <span class="tech-tag">Angular 19</span>
+              <span class="tech-tag">TypeScript</span>
+              <span class="tech-tag">RxJS</span>
+              <span class="tech-tag">SCSS</span>
+              <span class="tech-tag">Server-Side Rendering</span>
+            </div>
+          </div>
+          <div class="tech-section">
+            <div class="tech-label">Infraestructura</div>
+            <div class="tech-stack">
+              <span class="tech-tag">Azure Cloud</span>
+              <span class="tech-tag">CORS Configuration</span>
+              <span class="tech-tag">Rate Limiting</span>
+              <span class="tech-tag">HTTP Client</span>
+              <span class="tech-tag">Image Extraction</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PANEL LATERAL DESLIZABLE PARA ANÁLISIS COMPLETO -->
+<div class="analysis-panel" [class.panel-open]="selectedEvent">
+  <div class="panel-backdrop" (click)="closeEventDetails()"></div>
+
+  <div class="panel-content" *ngIf="selectedEvent">
+    <!-- Panel Header -->
+    <header class="panel-header">
+      <div class="header-title">
+        <span class="analysis-icon">🔍</span>
+        <span>Análisis Completo</span>
+      </div>
+      <button class="panel-close" (click)="closeEventDetails()">
+        <span>×</span>
+      </button>
+    </header>
+
+    <!-- Panel Body con scroll personalizado -->
+    <div class="panel-body">
+      <!-- Información principal del evento -->
+      <div class="event-header">
+        <div class="event-meta">
+          <span class="event-source">{{ selectedEvent.sourceName || 'Fuente desconocida' }}</span>
+          <span class="event-date">{{ selectedEvent.fecha | date:'dd/MM/yyyy' }}</span>
+          <span class="event-time">{{ getTimeAgo(selectedEvent.createdAt) }}</span>
+        </div>
+
+        <div class="event-categories" *ngIf="selectedEvent.categories.length > 0">
+          <span *ngFor="let category of selectedEvent.categories" class="event-category"
+            [attr.data-category]="category.toLowerCase()">
+            {{ category }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Imagen del evento si existe -->
+      <div class="event-image" *ngIf="selectedEvent.imageUrl">
+        <img [src]="selectedEvent.imageUrl" [alt]="selectedEvent.titulo">
+      </div>
+
+      <!-- Título y descripción -->
+      <div class="event-content">
+        <h1 class="event-title">{{ selectedEvent.titulo }}</h1>
+        <div class="event-description" *ngIf="selectedEvent.descripcion">
+          <p>{{ selectedEvent.descripcion }}</p>
+        </div>
+      </div>
+
+      <!-- Secciones de análisis IA -->
+      <div class="analysis-sections">
+        <div class="analysis-block" *ngIf="selectedEvent.origen">
+          <div class="block-header">
+            <div class="block-icon">🔍</div>
+            <h3>Análisis de Origen</h3>
+          </div>
+          <div class="block-content">
+            <p>{{ selectedEvent.origen }}</p>
+          </div>
+        </div>
+
+        <div class="analysis-block" *ngIf="selectedEvent.impacto">
+          <div class="block-header">
+            <div class="block-icon">📊</div>
+            <h3>Evaluación de Impacto</h3>
+          </div>
+          <div class="block-content">
+            <p>{{ selectedEvent.impacto }}</p>
+          </div>
+        </div>
+
+        <div class="analysis-block" *ngIf="selectedEvent.prediccionIA">
+          <div class="block-header">
+            <div class="block-icon">🤖</div>
+            <h3>Predicción IA</h3>
+          </div>
+          <div class="block-content">
+            <p>{{ selectedEvent.prediccionIA }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Eventos similares con carrusel -->
+      <div class="similar-events" *ngIf="selectedEvent.similarEvents.length > 0">
+        <div class="similar-header">
+          <h3>
+            <span class="similar-icon">🕒</span>
+            Eventos Similares ({{ selectedEvent.similarEvents.length }})
+          </h3>
+        </div>
+
+        <div class="similar-carousel">
+          <button class="carousel-btn carousel-prev" [disabled]="currentSimilarIndex === 0" (click)="previousSimilar()">
+            ‹
+          </button>
+
+          <div class="carousel-content">
+            <div class="similar-card">
+              <div class="similar-title">{{ selectedEvent.similarEvents[currentSimilarIndex].evento }}</div>
+              <div class="similar-detail" *ngIf="selectedEvent.similarEvents[currentSimilarIndex].detalle">
+                {{ selectedEvent.similarEvents[currentSimilarIndex].detalle }}
+              </div>
+            </div>
+          </div>
+
+          <button class="carousel-btn carousel-next"
+            [disabled]="currentSimilarIndex === selectedEvent.similarEvents.length - 1" (click)="nextSimilar()">
+            ›
+          </button>
+        </div>
+
+        <div class="carousel-indicators">
+          <span *ngFor="let similar of selectedEvent.similarEvents; let i = index" class="indicator"
+            [class.active]="i === currentSimilarIndex" (click)="goToSimilar(i)">
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel Footer -->
+    <div class="panel-footer" *ngIf="selectedEvent.fuentes">
+      <button class="source-link-btn" (click)="openSource(selectedEvent.fuentes)">
+        <span class="link-icon">🔗</span>
+        Ver fuente original
+      </button>
+    </div>
+  </div>
+</div>
