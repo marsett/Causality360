@@ -12,7 +12,6 @@ Aplicación web desarrollada con Angular que proporciona análisis automatizado 
 - **Backend:** .NET API (ApiCausality360)
 - **SSR:** Angular Universal con Express
 - **CI/CD:** GitHub Actions
-- **Testing:** Karma + Jasmine
 
 ## ✨ Características
 - ✅ **5 noticias diarias** procesadas automáticamente
