@@ -7,8 +7,8 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 Aplicación web desarrollada con Angular que proporciona análisis automatizado de noticias españolas mediante inteligencia artificial. Procesa diariamente 5 noticias seleccionadas, generando análisis de origen, impacto y predicciones fundamentadas.
 
 ## 🛠️ Tecnologías Utilizadas
-- **Framework:** Angular 19.2.14
-- **Lenguajes:** TypeScript 5.7.2, SCSS, HTML5
+- **Framework:** Angular
+- **Lenguajes:** TypeScript, SCSS, HTML5
 - **Backend:** .NET API (ApiCausality360)
 - **SSR:** Angular Universal con Express
 - **CI/CD:** GitHub Actions
