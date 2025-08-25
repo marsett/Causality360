@@ -71,12 +71,13 @@
 
         <div class="featured-content">
           <div class="featured-meta">
-            <div class="category-badges">
+            <!-- CATEGORÍAS: Featured story - Muestra las primeras 2 categorías del evento principal -->
+            <!-- <div class="category-badges">
               <span *ngFor="let category of events[0].categories.slice(0,2)" class="category-badge"
                 [attr.data-category]="category.toLowerCase()">
                 {{ category }}
               </span>
-            </div>
+            </div> -->
             <div class="source-attribution">
               <span class="source">{{ events[0].sourceName || 'Fuente desconocida' }}</span>
               <span class="timestamp">{{ getTimeAgo(events[0].createdAt) }}</span>
@@ -125,12 +126,13 @@
 
           <div class="card-content">
             <div class="card-header">
-              <div class="categories-list">
+              <!-- CATEGORÍAS: Cards de noticias - Muestra las primeras 2 categorías de cada noticia -->
+              <!-- <div class="categories-list">
                 <span *ngFor="let category of event.categories.slice(0,2)" class="category-tag"
                   [attr.data-category]="category.toLowerCase()">
                   {{ category }}
                 </span>
-              </div>
+              </div> -->
               <div class="source-info">
                 <span class="source-name">{{ event.sourceName || 'Fuente' }}</span>
                 <span class="publish-time">{{ getTimeAgo(event.createdAt) }}</span>
@@ -184,6 +186,7 @@
           <div class="feature-card">
             <div class="feature-icon">🏷️</div>
             <h3>5 Categorías Inteligentes</h3>
+            <!-- CATEGORÍAS: Información sobre el sistema de categorización automática -->
             <p>Categorización automática en Política, Economía, Tecnología, Social e Internacional mediante algoritmo de
               análisis de contenido y coherencia textual. <strong>Categorización auténtica basada en el contenido real</strong> sin forzar distribución.</p>
           </div>
@@ -363,12 +366,13 @@
           <span class="event-time">{{ getTimeAgo(selectedEvent.createdAt) }}</span>
         </div>
 
-        <div class="event-categories" *ngIf="selectedEvent.categories.length > 0">
+        <!-- CATEGORÍAS: Panel lateral - Muestra todas las categorías del evento seleccionado -->
+        <!-- <div class="event-categories" *ngIf="selectedEvent.categories.length > 0">
           <span *ngFor="let category of selectedEvent.categories" class="event-category"
             [attr.data-category]="category.toLowerCase()">
             {{ category }}
           </span>
-        </div>
+        </div> -->
       </div>
 
       <!-- Imagen del evento si existe -->
