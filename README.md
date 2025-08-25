@@ -22,7 +22,6 @@ Aplicación web desarrollada con Angular que proporciona análisis automatizado 
 - ✅ **Diseño completamente responsivo** (Desktop, Tablet, Mobile)
 - ✅ **Panel lateral deslizable** para análisis detallado
 - ✅ **Carruseles interactivos** con controles adaptativos
-- ✅ **Categorización automática** (Política, Economía, Tecnología, Social, Internacional)
 - ✅ **Estados de carga y error** manejados elegantemente
 - ✅ **Workflow explicativo** del procesamiento de noticias
 - ✅ **Server-Side Rendering** para mejor SEO
@@ -30,7 +29,7 @@ Aplicación web desarrollada con Angular que proporciona análisis automatizado 
 ## 📱 Funcionalidades Principales
 
 ### 🏠 Análisis de Noticias
-Procesamiento automático diario a las 12:00 AM con análisis IA que incluye origen, impacto y predicciones, además de categorización inteligente por temática.
+Procesamiento automático diario a las 12:00 AM con análisis IA que incluye origen, impacto y predicciones para cada noticia seleccionada.
 
 ### 🎠 Carruseles Interactivos
 Workflow de 4 pasos explicativos con eventos similares históricos navegables y controles adaptativos según dispositivo.
@@ -90,7 +89,6 @@ La aplicación consume una API .NET que proporciona endpoints para la gestión d
 - Diseño responsivo optimizado
 - Integración completa con API .NET backend
 - Server-Side Rendering configurado
-- Sistema de categorización visual por colores
 - Estados de carga y error manejados
 - Análisis inteligente de noticias con IA
 
