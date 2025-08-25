@@ -80,6 +80,7 @@
             </div> -->
             <div class="source-attribution">
               <span class="source">{{ events[0].sourceName || 'Fuente desconocida' }}</span>
+              <span class="separator">•</span>
               <span class="timestamp">{{ getTimeAgo(events[0].createdAt) }}</span>
             </div>
           </div>
@@ -135,6 +136,7 @@
               </div> -->
               <div class="source-info">
                 <span class="source-name">{{ event.sourceName || 'Fuente' }}</span>
+                <span class="separator">•</span>
                 <span class="publish-time">{{ getTimeAgo(event.createdAt) }}</span>
               </div>
             </div>
