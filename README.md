@@ -1,12 +1,13 @@
 # Causality360 - Análisis Inteligente de Noticias
 
-## 📄 Licencia
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
-
 ## 🚀 Descripción
+
 Aplicación web desarrollada con Angular que proporciona análisis automatizado de noticias españolas mediante inteligencia artificial. Procesa diariamente 5 noticias seleccionadas, generando análisis de origen, impacto y predicciones fundamentadas.
 
+🔗 **[Ver Proyecto en Vivo](https://ashy-bay-0e29e4a03.1.azurestaticapps.net)**
+
 ## 🛠️ Tecnologías Utilizadas
+
 - **Framework:** Angular
 - **Lenguajes:** TypeScript, SCSS, HTML5
 - **Backend:** .NET API (ApiCausality360)
@@ -14,6 +15,7 @@ Aplicación web desarrollada con Angular que proporciona análisis automatizado 
 - **CI/CD:** GitHub Actions
 
 ## ✨ Características
+
 - ✅ **5 noticias diarias** procesadas automáticamente
 - ✅ **Análisis IA** generado por Groq con origen, impacto y predicciones
 - ✅ **Eventos similares históricos** para contexto adicional
@@ -25,7 +27,22 @@ Aplicación web desarrollada con Angular que proporciona análisis automatizado 
 - ✅ **Workflow explicativo** del procesamiento de noticias
 - ✅ **Server-Side Rendering** para mejor SEO
 
+## 📱 Funcionalidades Principales
+
+### 🏠 Análisis de Noticias
+Procesamiento automático diario a las 12:00 AM con análisis IA que incluye origen, impacto y predicciones, además de categorización inteligente por temática.
+
+### 🎠 Carruseles Interactivos
+Workflow de 4 pasos explicativos con eventos similares históricos navegables y controles adaptativos según dispositivo.
+
+### 📱 Panel Lateral Deslizable
+Análisis completo del evento seleccionado con navegación entre eventos similares y cierre suave con animaciones.
+
+### 🎨 Diseño Responsivo
+Interfaz totalmente adaptativa que se optimiza automáticamente para desktop, tablet y mobile con controles inteligentes según el dispositivo.
+
 ## 🏗️ Estructura del Proyecto
+
 ```
 Causality360/
 ├── src/
@@ -44,107 +61,41 @@ Causality360/
 │   │   └── app.module.*
 │   ├── assets/
 │   └── index.html
+├── ApiCausality360/        # Backend .NET
 ├── angular.json
 ├── package.json
 └── README.md
 ```
 
-## 🚀 Instalación y Configuración
-
-### Prerrequisitos
-- Node.js (v18 o superior)
-- npm (v9 o superior)
-- Angular CLI 19+
-
-### Pasos para ejecutar localmente
-
-1. **Clonar el repositorio**
-   ```bash
-   git clone https://github.com/marsett/Causality360.git
-   cd Causality360
-   ```
-
-2. **Instalar dependencias**
-   ```bash
-   npm install
-   ```
-
-3. **Ejecutar en modo desarrollo**
-   ```bash
-   ng serve
-   ```
-
-4. **Abrir en el navegador**
-   ```
-   http://localhost:4200
-   ```
-
-## 📱 Funcionalidades Principales
-
-### 🏠 Análisis de Noticias
-- Procesamiento automático diario a las 12:00 AM
-- Análisis IA con origen, impacto y predicciones
-- Categorización inteligente por temática
-
-### 🎠 Carruseles Interactivos
-- Workflow de 4 pasos explicativos
-- Eventos similares históricos navegables
-- Controles adaptativos según dispositivo
-
-### 📱 Panel Lateral Deslizable
-- Análisis completo del evento seleccionado
-- Navegación entre eventos similares
-- Cierre suave con animaciones
-
-### 🎨 Diseño Responsivo
-- **Desktop (>768px):** Layout completo con controles laterales
-- **Tablet (≤768px):** Imagen arriba en featured story
-- **Mobile (≤480px):** Controles de carrusel debajo del contenido
-
-## 🔧 Scripts Disponibles
-```bash
-# Desarrollo
-npm start
-
-# Build para producción
-npm run build
-
-# Server-Side Rendering
-npm run serve:ssr:Causality360
-
-# Ejecutar tests
-npm test
-
-# Tests con coverage
-npm run test:coverage
-```
-
 ## 🌐 API Backend
-La aplicación consume una API .NET que proporciona:
+
+La aplicación consume una API .NET que proporciona endpoints para la gestión de eventos y análisis de noticias:
+
 - **GET /api/events/recent** - Eventos del día
-- **POST /api/events** - Crear evento (admin)
+- **POST /api/events** - Crear evento
 - **GET /api/events/{id}** - Detalle de evento
 
-## 📈 Rendimiento
-- 📱 Totalmente responsivo
-- 🎨 Optimizado para todos los dispositivos
-- ⚡ SSR para mejor SEO y carga inicial
-- 🔄 Cache inteligente de respuestas API
+## 📈 Rendimiento y Optimización
 
-## 🎯 Estados Responsivos
-- **≤480px:** Controles de carrusel debajo, touch optimizado
-- **≤768px:** Featured story con imagen arriba
-- **>768px:** Layout completo desktop con navegación lateral
+- 📱 Totalmente responsivo y optimizado para todos los dispositivos
+- ⚡ Server-Side Rendering para mejor SEO y carga inicial
+- 🔄 Cache inteligente de respuestas API
+- 🎨 Estados de carga y error manejados elegantemente
 
 ## 🔄 Actualizaciones Recientes
-- **v1.0.0** (2025) - Lanzamiento inicial
-  - Sistema de carruseles interactivos completo
-  - Panel lateral deslizable implementado
-  - Diseño responsivo optimizado para 3 breakpoints
-  - Integración completa con API .NET backend
-  - Server-Side Rendering configurado
-  - Sistema de categorización visual por colores
-  - Estados de carga y error manejados
-  - Análisis inteligente de noticias con IA
+
+**v1.0.0** (2025) - Lanzamiento inicial
+- Sistema de carruseles interactivos completo
+- Panel lateral deslizable implementado
+- Diseño responsivo optimizado
+- Integración completa con API .NET backend
+- Server-Side Rendering configurado
+- Sistema de categorización visual por colores
+- Estados de carga y error manejados
+- Análisis inteligente de noticias con IA
 
 ---
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
