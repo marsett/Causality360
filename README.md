@@ -94,6 +94,14 @@ La aplicación consume una API .NET que proporciona endpoints para la gestión d
 
 ---
 
+## 🎯 Autor
+
+**Mario Jiménez Marset**
+- 📧 **Email:** [jimenezmarset@gmail.com](mailto:jimenezmarset@gmail.com)
+- 💼 **LinkedIn:** [mario-jimenez-marset](https://www.linkedin.com/in/mario-jimenez-marset)
+
+---
+
 ## 📄 Licencia
 
 Este proyecto está disponible para visualización y evaluación profesional. Ver el archivo [LICENSE](LICENSE) para más detalles sobre términos de uso y restricciones.
